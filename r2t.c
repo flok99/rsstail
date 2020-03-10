@@ -164,6 +164,7 @@ int main(int argc, char *argv[])
 	int sw = 0;
 	int verbose = 0;
 	char show_timestamp = 0, show_link = 0, show_enclosure_url = 0, show_description = 0, show_pubdate = 0, show_author = 0, show_comments = 0, show_guid = 0;
+	char show_title = 1;
 	char strip_html = 0, no_error_exit = 0;
 	char one_shot = 0;
 	char no_heading = 0;
@@ -180,7 +181,7 @@ int main(int argc, char *argv[])
 
 	memset(&mot, 0x00, sizeof(mot));
 
-	while((sw = getopt(argc, argv, "A:Z:1b:PHztledrpacgu:Ni:n:x:y:vVh")) != -1)
+	while((sw = getopt(argc, argv, "A:Z:1b:PHztTledrpacgu:Ni:n:x:y:vVh")) != -1)
 	{
 		switch(sw)
 		{
@@ -259,6 +260,10 @@ int main(int argc, char *argv[])
 
 			case 'z':
 				continue_on_error = 1;
+				break;
+
+			case 'T':
+				show_title = 0;
 				break;
 
 			case 't':
@@ -515,7 +520,7 @@ int main(int argc, char *argv[])
 				if (heading)
 					printf(" %s", heading);
 
-				if (item_cur -> title != NULL)
+				if (show_title && item_cur -> title != NULL)
 				{
 					char *title = my_convert(converter, item_cur -> title);
 
